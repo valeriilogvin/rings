@@ -6,16 +6,22 @@ let rings = {
     typeContainer: document.querySelector('.js_type_container'),
     tabStone: document.querySelector('.js_tab_stone'),
     stoneContainer: document.querySelector('.js_stone_container'),
+    tabSize: document.querySelector('.js_tab_size'),
+    sizeContainer: document.querySelector('.js_size_container'),
 
+    selectedType: 0,
+    selectedStone: 0,
+    selectedSizeType: 'ct',
+    selectedSize: '0.40ct',
 
     type: [
-        'img/i_r_1.png',
-        'img/i_r_2.png',
-        'img/i_r_3.png'
+        'img/type/0.png',
+        'img/type/1.png',
+        'img/type/2.png'
     ],
+
     stone: [
         {
-            icon: 'img/i_1.png',
             size: {
                 ct: [
                     '0.40ct',
@@ -31,69 +37,6 @@ let rings = {
             },
             title: 'Square Emerald Cut Diamond',
             text: 'The square emerald cut diamond is a variation of the Asscher cut. It is step cut, with a square shape and cut corners. This diamond shape produces a similar subtle elegance to the emerald cut, and is a popular shape for vintage styled solitaire rings.'
-        },
-        {
-            icon: 'img/i_2.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_3.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_4.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_5.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_6.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_7.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_8.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_9.png',
-            size: [
-                '11',
-                '12',
-            ]
-        },
-        {
-            icon: 'img/i_10.png',
-            size: [
-                '11',
-                '12',
-            ]
         }
     ],
 };
@@ -101,13 +44,14 @@ let rings = {
 /*
 * functions dummy calls
 * */
-appendType();
-appendStone();
+appendTypeIcon();
+appendStoneIcon();
+appendStoneSize();
 
 /*
 * main functions
 * */
-function appendType(){
+function appendTypeIcon(){
     for( let i = 0; i < rings.type.length; i++){
         rings.typeContainer.insertAdjacentHTML('beforeend', `
             <div data-index="${i}" class="item js_type_item">
@@ -115,18 +59,20 @@ function appendType(){
             </div>
         `)
     }
-    selectType();
+    typeIconSwitcher();
 }
 
 rings.tabType.addEventListener('click', () => {
     rings.typeContainer.classList.remove('hide')
 });
 
-function selectType() {
+function typeIconSwitcher() {
     rings.typeContainer.querySelectorAll('.js_type_item')
         .forEach(item => {
             item.addEventListener('click', () => {
                 let thisIndex = item.dataset.index;
+
+                rings.selectedType = +thisIndex;
 
                 rings.typeContainer.classList.add('hide');
 
@@ -136,22 +82,22 @@ function selectType() {
     })
 }
 
-function appendStone(){
+function appendStoneIcon(){
     for( let i = 0; i < rings.stone.length; i++){
         rings.stoneContainer.insertAdjacentHTML('beforeend', `
             <div data-index="${i}" class="item js_stone_item">
-                <img src="${rings.stone[i].icon}" alt="">
+                <img src="img/stone/${i}/icon.png" alt="">
             </div>
         `)
     }
-    selectStone();
+    stoneIconSwitcher();
 }
 
 rings.tabStone.addEventListener('click', ()=>{
     rings.stoneContainer.classList.remove('hide')
 });
 
-function selectStone() {
+function stoneIconSwitcher() {
     rings.stoneContainer.querySelectorAll('.js_stone_item')
         .forEach(item => {
             item.addEventListener('click', () => {
@@ -160,7 +106,41 @@ function selectStone() {
                 rings.stoneContainer.classList.add('hide');
 
                 rings.tabStone.querySelector('img')
-                    .setAttribute('src', rings.stone[thisIndex].icon)
+                    .setAttribute('src', `img/stone/${thisIndex}/icon.png`)
             })
     })
+}
+
+function appendStoneSize() {
+    rings.tabSize.innerText = rings.selectedSize;
+
+    for( let i = 0; i < rings.stone[rings.selectedStone].size[rings.selectedSizeType].length; i++){
+        rings.sizeContainer.insertAdjacentHTML('beforeend', `
+            <div data-index="${i}" class="item js_size_item">
+                ${rings.stone[rings.selectedStone].size[rings.selectedSizeType][i]}
+            </div>
+        `)
+    }
+    sizeSwitcher();
+}
+
+rings.tabSize.addEventListener('click', ()=>{
+    rings.sizeContainer.classList.remove('hide')
+});
+
+
+function sizeSwitcher() {
+    rings.sizeContainer.querySelectorAll('.js_size_item')
+        .forEach(item => {
+            item.addEventListener('click', () => {
+                let thisIndex = item.dataset.index;
+
+                rings.selectedSize = rings.stone[rings.selectedStone].size[rings.selectedSizeType][thisIndex];
+
+                rings.sizeContainer.classList.add('hide');
+
+                rings.tabSize.innerText = rings.stone[rings.selectedStone].size[rings.selectedSizeType][thisIndex];
+
+            })
+        })
 }
