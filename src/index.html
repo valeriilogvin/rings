@@ -9,30 +9,69 @@
 
 </head>
 <body>
-<a class="button jsBtnOpen">Открыть</a>
+<a class="button js_btnOpen">Открыть</a>
 
 <div class="ring-modal js_ring_modal">
     <div class="container">
-        <div class="info-block"></div>
-        <div class="hand-block" style="background-image: url('img/hand_1.jpg')"></div>
+
+        <a onclick="burgerSwitcher(1)" class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+
+        <div class="info-block js_info_block">
+
+            <a class="close" onclick="burgerSwitcher(0)">X</a>
+
+            <div class="title js_info_title"></div>
+            <div class="text js_info_text"></div>
+
+            <div class="hand-color">
+                <span>Skintone</span>
+                <div data-index="0" class="item active js_skintone" style="background-color: #e1ae9b"></div>
+                <div data-index="1" class="item js_skintone" style="background-color: #e1ae9b"></div>
+                <div data-index="2" class="item js_skintone" style="background-color: #a57462;"></div>
+                <div data-index="3" class="item js_skintone" style="background-color: #694335;"></div>
+            </div>
+
+            <div class="stone-unit">
+                <span>Unit</span>
+                <div data-index="0" class="item active js_unit">ct</div>
+                <div data-index="1" class="item js_unit">mm</div>
+            </div>
+
+            <div class="shank">
+                <span>Shank</span>
+                <div data-index="0" class="item active js_info_shank">Plain</div>
+                <div data-index="1" class="item js_info_shank">Pave</div>
+            </div>
+        </div>
+        <div class="hand-block js_hand_image" style="background-image: url('img/skintone/0.jpg')">
+            <div class="image">
+                <img src="" alt="" class="shank js_shank">
+                <img src="" alt="" class="stone js_stone">
+            </div>
+        </div>
         <div class="tabs js_tabs">
             <div class="tabs__item type icon-block js_tab_type">
                 <img class="icon" src="img/type/0.png" alt="">
             </div>
             <div class="tabs__item stone icon-block js_tab_stone">
-                <img class="icon" src="img/stone/0/icon.png" alt="">
+                <img class="icon js_stone" src="img/stone/0/icon.png" alt="">
             </div>
-            <div class="tabs__item icon-block js_tab_size"></div>
+            <div class="tabs__item icon-block tab-size js_tab_size"></div>
         </div>
 
-        <div class="type__container hide js_type_container"></div>
+        <div class="item-container type__container hide js_type_container"></div>
 
-        <div class="stone__container hide scroll-hide js_stone_container"></div>
+        <div class="item-container stone__container hide scroll-hide js_stone_container"></div>
 
-        <div class="size__container hide scroll-hide js_size_container"></div>
+        <div class="item-container size__container hide scroll-hide js_size_container"></div>
 
     </div>
 </div>
+
 <div class="overlay"></div>
 
 <script type="text/javascript" src="js/main.js"></script>
